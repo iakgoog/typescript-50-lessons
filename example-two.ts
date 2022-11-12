@@ -178,4 +178,14 @@ function isArticleInStock(article: OptionalArticle) {
   return false
 }
 
+/**
+ * Exporting and Importing Types
+ */
 
+export type ExportedOptionalArticle = {
+  title: string,
+  price: number,
+  vat: number,
+  stock?: number,
+  description?: string,
+}
