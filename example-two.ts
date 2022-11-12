@@ -158,3 +158,24 @@ function checkOrders(orders: Order[]) {
   }
   return valid  
 }
+
+/**
+ * Optional Properties
+ */
+
+type OptionalArticle = {
+  title: string,
+  price: number,
+  vat: number,
+  stock?: number,
+  description?: string,
+}
+
+function isArticleInStock(article: OptionalArticle) {
+  if (article.stock) {
+    return article.stock > 0
+  }
+  return false
+}
+
+
