@@ -82,3 +82,16 @@ const shopitem = {
 }
 
 const anotherMovie: Article = shopitem
+
+// function createArticleElement(article: Article): string {
+function createArticleElement(
+  article: { title: string, price: number, vat: number }
+): string {
+  const title = article.title
+  const price = addVAT(article.price, article.vat)
+  return `<h2>Bur ${title} for ${price}</h2>`
+}
+
+createArticleElement(shopitem)
+
+createArticleElement(anotherMovie)
