@@ -14,11 +14,13 @@ deliveryAddress.push('421')
 
 // deliveryAddress.push(2000)
 
-function selectDeliveryAddress(addressOrIndex: any): string {
+function selectDeliveryAddress(addressOrIndex: unknown): string {
   if (typeof addressOrIndex === 'number' && addressOrIndex < deliveryAddress.length) {
     return deliveryAddress[addressOrIndex]
+  } else if (typeof addressOrIndex === 'string') {
+    return addressOrIndex
   }
-  return addressOrIndex
+  return ''
 }
 
 // Oh no! This is totally OK in TypeScript, but
