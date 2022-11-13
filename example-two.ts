@@ -1,26 +1,29 @@
 function addVAT(price: number, vat: number = 0.2): number {
-  return price * (1 + vat)
+  return price * (1 + vat);
 }
 
-const vatPrice = addVAT(30, 0.2)
-const vatPriceWithDefault = addVAT(30)
+const vatPrice = addVAT(30, 0.2);
+const vatPriceWithDefault = addVAT(30);
 
 // const vatPriceErrors = addVAT(30, 'a string!')
 // const vatPriceAlsoWrong = addVAT('Hi, friends!')
 
-let deliveryAddress: string[] = []
+let deliveryAddress: string[] = [];
 
-deliveryAddress.push('421')
+deliveryAddress.push('421');
 
 // deliveryAddress.push(2000)
 
 function selectDeliveryAddress(addressOrIndex: unknown): string {
-  if (typeof addressOrIndex === 'number' && addressOrIndex < deliveryAddress.length) {
-    return deliveryAddress[addressOrIndex]
+  if (
+    typeof addressOrIndex === 'number' &&
+    addressOrIndex < deliveryAddress.length
+  ) {
+    return deliveryAddress[addressOrIndex];
   } else if (typeof addressOrIndex === 'string') {
-    return addressOrIndex
+    return addressOrIndex;
   }
-  return ''
+  return '';
 }
 
 // Oh no! This is totally OK in TypeScript, but
@@ -28,13 +31,13 @@ function selectDeliveryAddress(addressOrIndex: unknown): string {
 // return true? This is going to blow up in runtime!
 // const myFavouriteAddress = selectDeliveryAddress(true)
 
-type Article = {
-  title: string;
-  price: number;
-  vat: number;
-  stock: number;
-  description: string;
-}
+// type Article = {
+//   title: string;
+//   price: number;
+//   vat: number;
+//   stock: number;
+//   description: string;
+// }
 
 const book = {
   title: 'Form Design Patterns by Adam Silver',
@@ -42,7 +45,7 @@ const book = {
   vat: 0.19,
   stock: 1000,
   description: 'A practical book on accessibility and forms',
-}
+};
 
 const movie: Article = {
   title: 'Helvetica',
@@ -50,7 +53,7 @@ const movie: Article = {
   vat: 0.19,
   stock: 1000,
   description: '90 minutes of gushing about Helvetica',
-}
+};
 
 const movBackup = {
   title: 'Helvetica',
@@ -58,19 +61,19 @@ const movBackup = {
   vat: 0.19,
   stock: 1000,
   description: '90 minutes of gushing about Helvetica',
-  rating: 5
-}
+  rating: 5,
+};
 
-const newMovie: Article = movBackup
+const newMovie: Article = movBackup;
 
-type ShopItem = {
-  title: string,
-  price: number,
-  vat: number,
-  stock: number,
-  description: string,
-  rating: number
-}
+// type ShopItem = {
+//   title: string,
+//   price: number,
+//   vat: number,
+//   stock: number,
+//   description: string,
+//   rating: number
+// }
 
 const shopitem = {
   title: 'Helvetica',
@@ -78,46 +81,48 @@ const shopitem = {
   vat: 0.19,
   stock: 1000,
   description: '90 minutes of gushing about Helvetica',
-  rating: 5
-}
+  rating: 5,
+};
 
-const anotherMovie: Article = shopitem
+const anotherMovie: Article = shopitem;
 
 // function createArticleElement(article: Article): string {
-function createArticleElement(
-  article: { title: string, price: number, vat: number }
-): string {
-  const title = article.title
-  const price = addVAT(article.price, article.vat)
-  return `<h2>Bur ${title} for ${price}</h2>`
+function createArticleElement(article: {
+  title: string;
+  price: number;
+  vat: number;
+}): string {
+  const title = article.title;
+  const price = addVAT(article.price, article.vat);
+  return `<h2>Bur ${title} for ${price}</h2>`;
 }
 
-createArticleElement(shopitem)
+createArticleElement(shopitem);
 
-createArticleElement(anotherMovie)
+createArticleElement(anotherMovie);
 
 /**
  * typeof
  */
 
 type ArticleStub = {
-  price: number,
-  vat: number,
-  title: number
-}
+  price: number;
+  vat: number;
+  title: number;
+};
 
 type Address = {
-  city: string,
-  zip: string,
-  street: string,
-  number: string,
-}
+  city: string;
+  zip: string;
+  street: string;
+  number: string;
+};
 
 type Customer = {
-  name: string,
-  addres: Address,
-  dateOfBirth: Date
-}
+  name: string;
+  addres: Address;
+  dateOfBirth: Date;
+};
 
 // type Order = {
 //   articles: ArticleStub[],
@@ -127,15 +132,15 @@ type Customer = {
 const defaultOrder = {
   articles: [
     {
-      price: 1200.50,
+      price: 1200.5,
       vat: 0.2,
-      title: 'Macbook Air Refurbished - 2013'
+      title: 'Macbook Air Refurbished - 2013',
     },
     {
       price: 9,
       vat: 0,
-      title: 'I feel smashing subscription'
-    }
+      title: 'I feel smashing subscription',
+    },
   ],
   customer: {
     name: 'Fritz Furball',
@@ -143,20 +148,20 @@ const defaultOrder = {
       city: 'Smashing Hall',
       zip: '90210',
       street: 'Whisker-ia Lane',
-      number: '1337'
+      number: '1337',
     },
-    dateOfBirth: new Date(2006, 9, 1)
-  }
-}
+    dateOfBirth: new Date(2006, 9, 1),
+  },
+};
 
-type Order = typeof defaultOrder
+type Order = typeof defaultOrder;
 
 function checkOrders(orders: Order[]) {
   let valid = true;
   for (let order of orders) {
-    valid = valid && order.articles.length > 0
+    valid = valid && order.articles.length > 0;
   }
-  return valid  
+  return valid;
 }
 
 /**
@@ -164,18 +169,18 @@ function checkOrders(orders: Order[]) {
  */
 
 type OptionalArticle = {
-  title: string,
-  price: number,
-  vat: number,
-  stock?: number,
-  description?: string,
-}
+  title: string;
+  price: number;
+  vat: number;
+  stock?: number;
+  description?: string;
+};
 
 function isArticleInStock(article: OptionalArticle) {
   if (article.stock) {
-    return article.stock > 0
+    return article.stock > 0;
   }
-  return false
+  return false;
 }
 
 /**
@@ -183,41 +188,41 @@ function isArticleInStock(article: OptionalArticle) {
  */
 
 export type ExportedOptionalArticle = {
-  title: string,
-  price: number,
-  vat: number,
-  stock?: number,
-  description?: string,
-}
+  title: string;
+  price: number;
+  vat: number;
+  stock?: number;
+  description?: string;
+};
 
 /**
  * Classes in JavaScript
  */
 
 class Discount {
-  isPercentage: boolean
-  amount: number
+  isPercentage: boolean;
+  amount: number;
 
   constructor(isPercentage: boolean, amount: number) {
-    this.isPercentage = isPercentage
-    this.amount = amount
+    this.isPercentage = isPercentage;
+    this.amount = amount;
   }
 
   apply(article: OptionalArticle) {
     if (this.isPercentage) {
-      article.price = article.price - (article.price * this.amount)
+      article.price = article.price - article.price * this.amount;
     } else {
-      article.price = article.price - this.amount
+      article.price = article.price - this.amount;
     }
   }
 }
 
-const discount = new Discount(false, 10)
+const discount = new Discount(false, 10);
 discount.apply({
   price: 39,
   vat: 0.2,
-  title: 'Form Design Patterns'
-})
+  title: 'Form Design Patterns',
+});
 
 /**
  * Structural Typing with Classes
@@ -227,17 +232,17 @@ let allProductsTwentyBucks: Discount = {
   isPercentage: false,
   amount: 20,
   apply(article) {
-    article.price = 20
-  }
-}
+    article.price = 20;
+  },
+};
 
 type DiscountType = {
-  isPercentage: boolean,
-  amount: number,
-  apply(article: Article): void
-}
+  isPercentage: boolean;
+  amount: number;
+  apply(article: Article): void;
+};
 
-let disco: DiscountType = new Discount(true, 0.2)
+let disco: DiscountType = new Discount(true, 0.2);
 
 /**
  * Extending Classes
@@ -245,12 +250,12 @@ let disco: DiscountType = new Discount(true, 0.2)
 
 class TwentyPercentDiscount extends Discount {
   constructor() {
-    super(true, 0.2)
+    super(true, 0.2);
   }
 
   apply(article: Article) {
     if (article.price <= 40) {
-      super.apply(article)
+      super.apply(article);
     }
   }
 
@@ -259,8 +264,101 @@ class TwentyPercentDiscount extends Discount {
   // }
 }
 
-let disco1: Discount = new TwentyPercentDiscount()
+let disco1: Discount = new TwentyPercentDiscount();
 
-let disco2: TwentyPercentDiscount = new Discount(true, 0.3)
+let disco2: TwentyPercentDiscount = new Discount(true, 0.3);
 
+/**
+ * Describing Interfaces
+ */
 
+// Our Article type
+type Article = {
+  title: string;
+  price: number;
+  vat: number;
+  stock?: number;
+  description?: string;
+};
+// Our friend’s ShopItem
+interface ShopItem {
+  title: string;
+  price: number;
+  vat: number;
+  stock?: number;
+  description?: string;
+} // And yes, the semicolons are optional
+
+const discount1 = new Discount(true, 0.2)
+const shopItem: ShopItem = {
+  title: 'Inclusive components',
+  price: 30,
+  vat: 0.2
+}
+
+discount.apply(shopItem)
+
+class DVD implements ShopItem {
+  title: string
+  price: number
+  vat: number
+
+  constructor(title: string) {
+    this.title = title
+    this.price = 9.99
+    this.vat = 0.2
+  }
+}
+
+class Book implements Article {
+  title: string
+  price: number
+  vat: number
+
+  constructor(title: string) {
+    this.title = title
+    this.price = 39
+    this.vat = 0.2
+  }
+}
+
+let book1 = new Book('Art Direction on the web')
+discount.apply(book1)
+
+let dvd = new DVD('Contagion')
+discount.apply(dvd)
+
+/**
+ * Declaration Merging
+ */
+
+interface ShopItem {
+  reviews: {
+    rating: number,
+    content: string
+  }[]
+}
+
+/**
+ * Property Access Modifiers
+ */
+
+class AnotherArticle {
+  public title: string
+  #price: number
+
+  constructor(title: string, price: number) {
+    this.title = title
+    this.#price = price
+  }
+}
+
+const article1 = new AnotherArticle('Smashing Book 6', 39)
+
+console.log(article1.price)
+
+class AnotherArticle1 {
+  constructor(private price: number) {
+
+  }
+}
