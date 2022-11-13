@@ -238,3 +238,29 @@ type DiscountType = {
 }
 
 let disco: DiscountType = new Discount(true, 0.2)
+
+/**
+ * Extending Classes
+ */
+
+class TwentyPercentDiscount extends Discount {
+  constructor() {
+    super(true, 0.2)
+  }
+
+  apply(article: Article) {
+    if (article.price <= 40) {
+      super.apply(article)
+    }
+  }
+
+  // isValidForDiscount(article: Article) {
+  //   return article.price <= 40
+  // }
+}
+
+let disco1: Discount = new TwentyPercentDiscount()
+
+let disco2: TwentyPercentDiscount = new Discount(true, 0.3)
+
+
