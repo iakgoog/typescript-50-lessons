@@ -218,3 +218,23 @@ discount.apply({
   vat: 0.2,
   title: 'Form Design Patterns'
 })
+
+/**
+ * Structural Typing with Classes
+ */
+
+let allProductsTwentyBucks: Discount = {
+  isPercentage: false,
+  amount: 20,
+  apply(article) {
+    article.price = 20
+  }
+}
+
+type DiscountType = {
+  isPercentage: boolean,
+  amount: number,
+  apply(article: Article): void
+}
+
+let disco: DiscountType = new Discount(true, 0.2)
