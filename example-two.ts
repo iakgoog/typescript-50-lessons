@@ -362,3 +362,15 @@ class AnotherArticle1 {
 
   }
 }
+
+/**
+ * Abstract Classes
+ */
+
+abstract class Discount1 {
+  abstract isValid(article: OptionalArticle): boolean;
+
+  apply(article: Article) {
+    
+  }
+}
