@@ -371,6 +371,27 @@ abstract class Discount1 {
   abstract isValid(article: OptionalArticle): boolean;
 
   apply(article: Article) {
-    
+
   }
 }
+
+/**
+ * Enums
+ */
+enum UserType {
+  Admin,
+  PayingCustomer,
+  Trial
+}
+
+function showWarning(user: UserType) {
+  switch(user) {
+    case UserType.Admin:
+      return false;
+    case UserType.PayingCustomer:
+      return false;
+    case UserType.Trial:
+      return false;
+  }
+}
+
