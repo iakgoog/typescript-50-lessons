@@ -17,3 +17,18 @@ declare function search(
 search('Ember', ['JavaScript'])
 search('Ember')
 search('Ember', [])
+
+/**
+ * Asynchronous Back-End Calls
+ */
+
+function performSearch(query: string, tags?: string[]): Promise<Result[]> {
+  let queryString = `?query=${query}`
+
+  if (tags && tags.length) {
+    queryString += `&tags=${tags.join()}`
+  }
+
+  return fetch(`/search${queryString}`)
+    .then(response => response.json())
+}
