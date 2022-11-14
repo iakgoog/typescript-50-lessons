@@ -1,5 +1,5 @@
 /**
- * Typing Function Heads
+ * Typing Function Heads & Optional Parameters
  */
 
 type Result = {
@@ -10,7 +10,7 @@ type Result = {
 
 declare function search(
   query: string,
-  tags: string[]
+  tags?: string[]
 ): Result[]
 
 
