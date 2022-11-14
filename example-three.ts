@@ -32,3 +32,11 @@ function performSearch(query: string, tags?: string[]): Promise<Result[]> {
   return fetch(`/search${queryString}`)
     .then(response => response.json())
 }
+
+/**
+ * Function Types
+ */
+
+type SearchFn = typeof performSearch
+
+
