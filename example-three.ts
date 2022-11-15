@@ -62,3 +62,10 @@ const query: Query = {
     return query
   }
 }
+
+/**
+ * Function Types in Functions
+ */
+declare function displaySearch(inputId: string, outputId: string, search: SearchFn): void
+
+
