@@ -110,3 +110,23 @@ const testSearch: SearchFn = function(query, tags) {
     abstract: `A practical book on ${term}`
   }])
 } */
+
+/**
+ * Number of Parameters
+ */
+
+// we can also drop arguments entirely if we don't have any use for them:
+const dummyContentSearchFn: SearchFn = function() {
+  return Promise.resolve([{
+    title: 'Form Design Patterns',
+    url: '/form-design-patterns',
+    abstract: 'A practical book on accessible forms'
+  }])
+}
+// JavaScript still allows us to pass the parameters; we just don’t do anything with them.
+// This makes dummyContentSearchFn, with no parameters, compatible with the type SearchFn.
+
+dummyContentSearchFn('Ember') // Good!
+dummyContentSearchFn('Ember', ['JavaScript']) // Good!
+
+dummyContentSearchFn()
