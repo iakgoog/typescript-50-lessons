@@ -66,6 +66,47 @@ const query: Query = {
 /**
  * Function Types in Functions
  */
+
 declare function displaySearch(inputId: string, outputId: string, search: SearchFn): void
 
+/**
+ * Anonymous Functions
+ */
 
+displaySearch('searchField', 'result', performSearch)
+
+displaySearch(
+  'searchField',
+  'result',
+  function(query, tags) {
+    return Promise.resolve([{
+      title: `The ${query} test book`,
+      url: `/${query}-design-patterns`,
+      abstract: `A practical book on ${query}`
+    }])
+  }
+)
+
+const testSearch: SearchFn = function(query, tags) {
+  return Promise.resolve([{
+    title: `The ${query} test book`,
+    url: `/${query}-design-patterns`,
+    abstract: `A practical book on ${query}`
+  }])
+}
+
+/* const testSearch: SearchFn = function(term, options) {
+  return Promise.resolve([{
+    title: `The ${term} test book`,
+    url: `/${term}-design-patterns`,
+    abstract: `A practical book on ${term}`
+  }])
+} */
+
+/* const testSearch: SearchFn = function(term) {
+  return Promise.resolve([{
+    title: `The ${term} test book`,
+    url: `/${term}-design-patterns`,
+    abstract: `A practical book on ${term}`
+  }])
+} */
