@@ -220,3 +220,41 @@ function displaySearch(
   document.getElementById(inputId)?.
     addEventListener('change', inputChangeHandler)
 }
+
+/**
+ * Tagged Template Literals
+ */
+
+const term = 'Ember'
+const results = 12
+
+// const result text = `You searched for ${term}, and got ${no} results`
+
+const result = {
+  title: 'A guide to @@starthl@@Ember@@endhl@@.js',
+  url: '/a-guide-to-ember',
+  description: 'The framework @@starthl@@Ember@@endhl@@.js in a nutshell'
+}
+
+// let markup = highlight`<li>${result.title}</li>`
+
+function highlight(
+  strings: TemplateStringsArray,
+  ...values: string[]
+) {
+  let str = ''
+  strings.forEach((templ, i) => {
+    let expr = values[i]?.
+      replace('@@start@@', '<em>').
+      replace('@@end@@', '</em>') ?? ''
+    str += templ + expr
+  });
+  return str
+}
+
+function createResultTemplate(results: Result[]): string {
+  return `<ul>
+    ${results.map(result =>
+        highlight`<li>${result.title}</li>`)}
+  </ul>`
+}
