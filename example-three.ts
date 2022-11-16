@@ -11,28 +11,30 @@ type Result = {
 declare function search(
   query: string,
   tags?: string[]
-): Result[]
+): Promise<Result[]>
 
-
+/*
 search('Ember', ['JavaScript'])
 search('Ember')
 search('Ember', [])
+*/
 
 /**
  * Asynchronous Back-End Calls
  */
 
-function performSearch(
+
+function search(
   query: string,
-  callback: (results: Result[]) => void, /* undefined */
+  callback: (results: Result[]) => undefined, // void
   tags?: string[],
 ) {
   let queryString = `?query=${query}`
   if (tags && tags.length) {
     queryString += `&tags=${tags.join()}`
   }
-  fetch(`/search${queryString}`)
-    .then(response => response.json() as Promise<Result[]>)
+  return fetch(`/search${queryString}`)
+    .then(response => response.json())
     // .then(results => {
     //   const didItWork = callback(results)
     //   // didItWork is undefined! This causes an error
@@ -45,7 +47,7 @@ function performSearch(
  * Function Types
  */
 
-type SearchFn = typeof performSearch
+type SearchFn = typeof search
 
 /**
  * Function Types in Objects
@@ -85,7 +87,7 @@ declare function displaySearch(
  * Anonymous Functions
  */
 
-displaySearch('searchField', 'result', performSearch)
+displaySearch('searchField', 'result', search)
 
 displaySearch(
   'searchField',
@@ -147,7 +149,7 @@ dummyContentSearchFn()
  * void
  */
 
-performSearch('Ember', function(results) {
+search('Ember', function(results) {
   console.log(results)
 })
 
@@ -155,14 +157,14 @@ function searchHandler(results: Result[]) {
   console.log(results)
 }
 
-performSearch('Ember', searchHandler)
+search('Ember', searchHandler)
 
 // we can also pass functions that have a different return type
 // Search handler now returns a number
 function searchHandler2(results: Result[]): number { return results.length
 }
 // Totally OK!
-performSearch('Ember', searchHandler2)
+search('Ember', searchHandler2)
 
 // This function shows results in an HTML element // but also returns the container element that // has been filled
 function showResults(results: Result[]) {
@@ -188,6 +190,20 @@ function showResults(results: Result[]) {
  * The Implementation
  */
 
+/*
+<form action="/search" method="POST">
+  <label for="search">Search the site</label>
+  <input type="search" id="search">
+  <button type="submit">
+</form>
+<div id="output" hidden>
+</div>
+*/
+
+/**
+ * Function Binding and HTML Elements
+ */
+
 function displaySearch(
   inputId: string,
   outputId: string,
@@ -196,6 +212,12 @@ function displaySearch(
   document.getElementById(inputId)?.
     addEventListener('change', function() {
       this.parentElement?.classList.add('active')
-      const searchTerm = this.value
+      if (this instanceof HTMLInputElement) {
+        const searchTerm = this.value
+        search(searchTerm)
+          .then(results => {
+            //
+          })
+      }
     })
 }
