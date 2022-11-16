@@ -75,7 +75,11 @@ const query: Query = {
  * Function Types in Functions
  */
 
-declare function displaySearch(inputId: string, outputId: string, search: SearchFn): void
+declare function displaySearch(
+  inputId: string,
+  outputId: string,
+  search: SearchFn
+): void
 
 /**
  * Anonymous Functions
@@ -179,3 +183,19 @@ function showResults(results: Result[]) {
 // })
 // But hey, this function also makes a good
 // search handler
+
+/**
+ * The Implementation
+ */
+
+function displaySearch(
+  inputId: string,
+  outputId: string,
+  search: SearchFn
+): void {
+  document.getElementById(inputId)?.
+    addEventListener('change', function() {
+      this.parentElement?.classList.add('active')
+      const searchTerm = this.value
+    })
+}
