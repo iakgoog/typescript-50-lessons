@@ -204,20 +204,19 @@ function showResults(results: Result[]) {
  * Function Binding and HTML Elements
  */
 
+/**
+ * Extracting the Callback
+ */
+
+function inputChangeHandler(this: HTMLElement) {
+  this.parentElement?.classList.add('active')
+}
+
 function displaySearch(
   inputId: string,
   outputId: string,
   search: SearchFn
 ): void {
   document.getElementById(inputId)?.
-    addEventListener('change', function() {
-      this.parentElement?.classList.add('active')
-      if (this instanceof HTMLInputElement) {
-        const searchTerm = this.value
-        search(searchTerm)
-          .then(results => {
-            //
-          })
-      }
-    })
+    addEventListener('change', inputChangeHandler)
 }
