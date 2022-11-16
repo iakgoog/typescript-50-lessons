@@ -22,15 +22,23 @@ search('Ember', [])
  * Asynchronous Back-End Calls
  */
 
-function performSearch(query: string, tags?: string[]): Promise<Result[]> {
+function performSearch(
+  query: string,
+  callback: (results: Result[]) => void, /* undefined */
+  tags?: string[],
+) {
   let queryString = `?query=${query}`
-
   if (tags && tags.length) {
     queryString += `&tags=${tags.join()}`
   }
-
-  return fetch(`/search${queryString}`)
-    .then(response => response.json())
+  fetch(`/search${queryString}`)
+    .then(response => response.json() as Promise<Result[]>)
+    // .then(results => {
+    //   const didItWork = callback(results)
+    //   // didItWork is undefined! This causes an error
+    //   didItWork += 2
+    // })
+    .then(results => void callback(results))
 }
 
 /**
@@ -130,3 +138,44 @@ dummyContentSearchFn('Ember') // Good!
 dummyContentSearchFn('Ember', ['JavaScript']) // Good!
 
 dummyContentSearchFn()
+
+/**
+ * void
+ */
+
+performSearch('Ember', function(results) {
+  console.log(results)
+})
+
+function searchHandler(results: Result[]) {
+  console.log(results)
+}
+
+performSearch('Ember', searchHandler)
+
+// we can also pass functions that have a different return type
+// Search handler now returns a number
+function searchHandler2(results: Result[]): number { return results.length
+}
+// Totally OK!
+performSearch('Ember', searchHandler2)
+
+// This function shows results in an HTML element // but also returns the container element that // has been filled
+function showResults(results: Result[]) {
+  const container = document.getElementById('results')
+  if(container) {
+    container.innerHTML = `<ul>
+      ${results.map(el => `<li>${el.title}</li>`)}
+    <ul>`;
+  }
+  return container;
+}
+// Somewhere in our app, we show a list of // pages on click
+// button.addEventListener('click', function() {
+//   const el = showResults(storedResults)
+//   if(el) {
+//     el.style.display = 'block'
+//   }
+// })
+// But hey, this function also makes a good
+// search handler
