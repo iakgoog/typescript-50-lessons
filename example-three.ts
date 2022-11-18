@@ -13,6 +13,16 @@ declare function search(
   tags?: string[]
 ): Promise<Result[]>
 
+/**
+ * Function Overloading
+ */
+
+declare function search(
+  term: string,
+  callback: (result: Result[]) => void,
+  tags?: string[]
+): void
+
 /*
 search('Ember', ['JavaScript'])
 search('Ember')
@@ -25,22 +35,31 @@ search('Ember', [])
 
 
 function search(
-  query: string,
-  callback: (results: Result[]) => undefined, // void
-  tags?: string[],
+  term: string,
+  p2?: string[] | ((results: Result[]) => void),
+  p3?: string[],
 ) {
-  let queryString = `?query=${query}`
+  const callback = typeof p2 === 'function' ? p2 : undefined
+
+  const tags =
+    typeof p2 !== 'undefined' && Array.isArray(p2) ? p2 :
+    typeof p3 !== 'undefined' && Array.isArray(p3) ? p3 :
+    undefined;
+
+  let queryString = `?query=${term}`
+
   if (tags && tags.length) {
     queryString += `&tags=${tags.join()}`
   }
-  return fetch(`/search${queryString}`)
+
+  const results = fetch(`/search${queryString}`)
     .then(response => response.json())
-    // .then(results => {
-    //   const didItWork = callback(results)
-    //   // didItWork is undefined! This causes an error
-    //   didItWork += 2
-    // })
-    .then(results => void callback(results))
+
+  if (callback) {
+    return void results.then(res => callback(res))
+  } else {
+    return results
+  }
 }
 
 /**
