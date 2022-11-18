@@ -314,12 +314,74 @@ declare function search(term: string, tags?: string[]): Promise<Result[]>
  */
 
 function *generateStuff() {
-  yield 1
   yield 2
-  let proceed = yield 3
+  yield 4
+  let proceed = yield 6
   if (proceed) {
-    yield 4
+    yield 8
   }
   return 'done'
 }
+
+const generator = generateStuff()
+console.log(generator.next().value) // log 1
+console.log(generator.next().value) // log 2
+console.log(generator.next().value) // log 3
+console.log(generator.next(true).value) // log 3
+console.log(generator.next().value) // log 3
+
+/**
+ * Polling Search
+ */
+
+type PollingResults = {
+  results: Result[],
+  done: boolean,
+}
+
+async function polling(term: string): Promise<PollingResults> {
+  return fetch(`/pollingSearch?query=${term}`)
+    .then(res => res.json())
+}
+
+function append(result: Result) {
+  const node = document.createElement('li')
+  node.innerHTML = `<a href="${result.url}">${result.title}</a>`
+  document.querySelector('#results')?.append(node)
+}
+
+async function *getResults(term: string) {
+  let state: PollingResults
+  do {
+    state = await polling(term)
+    yield state.results
+  } while (!state.done)
+}
+
+document.getElementById('searchField')?.addEventListener('change', handleChange)
+
+async function handleChange(this: HTMLElement, ev: Event) {
+  if (this instanceof HTMLInputElement) {
+    let resultsGen = getResults(this.value)
+    let next
+    do {
+      next = await resultsGen.next()
+      if (typeof next.value !== 'undefined') {
+        next.value.map(append)
+      }
+    } while(!next.done)
+  }
+}
+
+/*
+async function handleChange(this: HTMLElement, ev: Event) {
+  if (this instanceof HTMLInputElement) {
+    let resultsGen = getResults(this.value);
+    for await(results of resultsGen) {
+      results.map(append)
+    }
+  }
+}
+*/
+
 
