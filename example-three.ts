@@ -258,3 +258,12 @@ function createResultTemplate(results: Result[]): string {
         highlight`<li>${result.title}</li>`)}
   </ul>`
 }
+
+/**
+ * Rest Parameters
+ */
+
+declare function highlight(
+  strings: TemplateStringsArray,
+  ...values: string[]
+): string
