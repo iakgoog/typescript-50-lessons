@@ -309,3 +309,17 @@ async function search(
 declare function search(term: string, tags?: string[]): Promise<Result[]>
 */
 
+/**
+ * Generator Functions
+ */
+
+function *generateStuff() {
+  yield 1
+  yield 2
+  let proceed = yield 3
+  if (proceed) {
+    yield 4
+  }
+  return 'done'
+}
+
