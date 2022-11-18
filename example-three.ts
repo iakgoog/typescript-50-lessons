@@ -267,3 +267,26 @@ declare function highlight(
   strings: TemplateStringsArray,
   ...values: string[]
 ): string
+
+/**
+ * Asynchronouse Functions
+ */
+
+/*
+async function search(
+  query: string,
+  tags?: string[]
+) {
+  let queryString =`?query=${query}`
+  if (tags && tags.length) {
+    queryString += `&tags=${tags.join()}`
+  }
+  const response = await fetch(`/search${queryString}`)
+  const results = await response.json()
+
+  return results as Results[]
+}
+
+declare function search(term: string, tags?: string[]): Promise<Result[]>
+*/
+
