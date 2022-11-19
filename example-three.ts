@@ -350,24 +350,32 @@ function append(result: Result) {
   document.querySelector('#results')?.append(node)
 }
 
-async function *getResults(term: string) {
-  let state: PollingResults
+async function *getResults(term: string): AsyncGenerator<Result[], void, boolean> {
+  let state, stop
   do {
     state = await polling(term)
-    yield state.results
-  } while (!state.done)
+    // yield state.results
+    stop = yield state.results
+  // } while (!state.done)
+  } while (state.done && stop)
 }
 
 document.getElementById('searchField')?.addEventListener('change', handleChange)
+
+/**
+ * Yielding In
+ */
 
 async function handleChange(this: HTMLElement, ev: Event) {
   if (this instanceof HTMLInputElement) {
     let resultsGen = getResults(this.value)
     let next
+    let count = 0
     do {
-      next = await resultsGen.next()
+      next = await resultsGen.next(count >= 5)
       if (typeof next.value !== 'undefined') {
         next.value.map(append)
+        count += next.value.length
       }
     } while(!next.done)
   }
