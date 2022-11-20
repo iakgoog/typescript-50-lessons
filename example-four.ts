@@ -31,8 +31,29 @@ type Meetup = TechEventBase & {
 
 type Webinar = TechEventBase & {
   url: string,
-  price?: number,s
-  talsk: Talk
+  price?: number,
+  talks: Talk
 }
 
+/**
+ * Union Types
+ */
 
+type TechEvent = Webinar | Conference | Meetup;
+
+function printEvent(event: TechEvent) {
+  if (event.price) {
+    if (typeof event.price === 'number') {
+      console.log('Price in EUR: ', event.price)
+    } else {
+      console.log('It is free!')
+    }
+  }
+  if (Array.isArray(event.talks)) {
+    event.talks.forEach(talk => {
+      console.log(talk.title)
+    })
+  } else {
+    console.log(event.talks.title)
+  }
+}
