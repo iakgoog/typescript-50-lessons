@@ -14,7 +14,7 @@ type TechEventBase = {
   date: Date,
   capacity: number,
   rsvp: number,
-  kind: string
+  kind: 'webinar' | 'conference' | 'meetup'
 }
 
 type Conference = TechEventBase & {
@@ -94,3 +94,18 @@ type EventKind = 'webinar' | 'conference' | 'meetup'
 
 let tomorrowsEvent: EventKind = 'concert'
 
+/**
+ * Working with Value Types
+ */
+
+function getEventTeaser(event: TechEvent) {
+  switch(event.kind) {
+    case 'conference':
+      return `${event.title} (Conference)`
+    case 'meetup':
+      return `${event.title} (Meetup)`
+    case 'webinar':
+      return `${event.title} (Webinar)`
+    case 'concert':
+  }
+}
