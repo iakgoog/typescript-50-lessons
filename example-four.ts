@@ -14,25 +14,27 @@ type TechEventBase = {
   date: Date,
   capacity: number,
   rsvp: number,
-  kind: 'webinar' | 'conference' | 'meetup'
 }
 
 type Conference = TechEventBase & {
   location: string,
   price: number,
   talks: Talk[]
+  kind: 'conference'
 }
 
 type Meetup = TechEventBase & {
   location: string,
   price: string,
-  talks: Talk[]
+  talks: Talk[],
+  kind: 'meetup'
 }
 
 type Webinar = TechEventBase & {
   url: string,
   price?: number,
-  talks: Talk
+  talks: Talk,
+  kind: 'webinar'
 }
 
 /**
@@ -101,11 +103,16 @@ let tomorrowsEvent: EventKind = 'concert'
 function getEventTeaser(event: TechEvent) {
   switch(event.kind) {
     case 'conference':
-      return `${event.title} (Conference)`
+      return `${event.title} (Conference), ` + `priced at ${event.price} USD`
     case 'meetup':
-      return `${event.title} (Meetup)`
+      return `${event.title} (Meetup), ` + `hosted at ${event.location}`
     case 'webinar':
-      return `${event.title} (Webinar)`
-    case 'concert':
+      return `${event.title} (Webinar), ` + `available online at ${event.url}`
+    default:
+      throw new Error('Not sure what to do with that!')
   }
 }
+
+/**
+ * Discriminated Union Types
+ */
