@@ -76,3 +76,21 @@ const person: Person = {
   name: 'Sutthinart Khunvadhana',
   age: 40
 }
+
+/**
+ * Value TYpes
+ */
+
+let withTypeAny: any = 'conference'
+let withTypeString: string = 'conference'
+
+let withValueType: 'conference' = 'conference'
+
+let conference = 'conference'
+
+const conf = 'conference'
+
+type EventKind = 'webinar' | 'conference' | 'meetup'
+
+let tomorrowsEvent: EventKind = 'concert'
+
