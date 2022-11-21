@@ -57,3 +57,22 @@ function printEvent(event: TechEvent) {
     console.log(event.talks.title)
   }
 }
+
+/**
+ * Object Sets
+ */
+
+type Name = {
+  name: string
+}
+
+type Age = {
+  age: number
+}
+
+type Person = Age & Name
+
+const person: Person = {
+  name: 'Sutthinart Khunvadhana',
+  age: 40
+}
