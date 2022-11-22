@@ -116,3 +116,25 @@ function getEventTeaser(event: TechEvent) {
 /**
  * Discriminated Union Types
  */
+
+/**
+ * Fixating Value Types
+ */
+
+const script19 = {
+  title: 'ScriptConf',
+  date: new Date('2019-10-25'),
+  capacity: 300,
+  rsvp: 289,
+  description: 'The feel-good JS conference',
+  kind: 'conference' as const,
+  price: 129,
+  location: 'Central Linz',
+  talks: [{
+    speaker: 'Vitaly Friedman',
+    title: 'Designing with Privacy in mind',
+    abstract: '...'
+  }]
+};
+
+getEventTeaser(script19)
