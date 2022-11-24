@@ -138,3 +138,22 @@ const script19 = {
 };
 
 getEventTeaser(script19)
+
+/**
+ * Dynamic Unions
+ */
+
+function filterByKind(
+  list: TechEvent[],
+  kind: EventKind,
+): TechEvent[] {
+  return list.filter(el => el.kind === kind)
+}
+
+declare const eventList: TechEvent[];
+
+filterByKind(eventList, 'conference')
+filterByKind(eventList, 'webinar')
+filterByKind(eventList, 'meetup')
+
+filterByKind(eventList, 'concert')
