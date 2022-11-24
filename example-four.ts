@@ -41,7 +41,13 @@ type Webinar = TechEventBase & {
  * Union Types
  */
 
-type TechEvent = Webinar | Conference | Meetup;
+type Hackathon = TechEventBase & {
+  location: string,
+  price?: number,
+  kind: 'hackathon'
+}
+
+type TechEvent = Conference | Webinar | Meetup | Hackathon
 
 function printEvent(event: TechEvent) {
   if (event.price) {
@@ -92,7 +98,12 @@ let conference = 'conference'
 
 const conf = 'conference'
 
-type EventKind = 'webinar' | 'conference' | 'meetup'
+declare const newEvent: TechEvent
+
+console.log(newEvent['kind'])
+
+// type EventKind = 'webinar' | 'conference' | 'meetup'
+type EventKind = TechEvent['kind']
 
 let tomorrowsEvent: EventKind = 'concert'
 
@@ -157,3 +168,9 @@ filterByKind(eventList, 'webinar')
 filterByKind(eventList, 'meetup')
 
 filterByKind(eventList, 'concert')
+
+/**
+ * Lookup Types
+ */
+
+filterByKind(eventList, 'hackathon')
