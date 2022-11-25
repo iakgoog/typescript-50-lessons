@@ -201,3 +201,35 @@ function groupEvents(events: TechEvent[]): GroupedEvents {
   })
   return grouped
 }
+
+type UserEvents = {
+  watching: TechEvent[],
+  rvsp: TechEvent[],
+  attended: TechEvent[],
+  signedout: TechEvent[],
+}
+
+/**
+ * Keyof
+ */
+
+// type UserEventCategory = 'watching' | 'rsvp' | 'attended' | 'signedoff'
+type UserEventCategory = keyof UserEvents
+
+type TalkProperties = keyof Talk
+
+type StringKeys = keyof 'speaker'
+
+type ArrayKeys = keyof []
+
+function filterUserEvent(
+  userEventList: UserEvents,
+  category: UserEventCategory,
+  filterKind?: EventKind,
+) {
+  const filteredList = userEventList[category]
+  if (filterKind) {
+    return filteredList.filter(event => event.kind === filterKind)
+  }
+  return filteredList
+}
