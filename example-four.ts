@@ -174,3 +174,30 @@ filterByKind(eventList, 'concert')
  */
 
 filterByKind(eventList, 'hackathon')
+
+/**
+ * Mapped Types
+ */
+
+// type GroupedEvents = {
+//   conference: TechEvent[],
+//   meetup: TechEvent[],
+//   webinar: TechEvent[],
+//   hackathon: TechEvent[]
+// }
+type GroupedEvents = {
+  [Kind in EventKind]: TechEvent[]
+}
+
+function groupEvents(events: TechEvent[]): GroupedEvents {
+  const grouped = {
+    conference: [],
+    meetup: [],
+    webinar: [],
+    hackathon: []
+  };
+  events.forEach(el => {
+    grouped[el.kind].push(el)
+  })
+  return grouped
+}
