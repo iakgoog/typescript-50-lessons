@@ -4,8 +4,8 @@
 
 type Talk = {
   title: string,
-  abstract: string,
   speaker: string
+  abstract?: string,
 }
 
 type TechEventBase = {
@@ -292,5 +292,11 @@ function getTeaserListElement(event: TechEvent) {
 function appendEventToList(event: TechEvent) {
   const list = document.querySelector('#event-list')
   const element = getTeaserListElement(event)
-  list.append(element)
+  list?.append(element)
 }
+
+/**
+ * Strict null Checks
+ */
+
+
