@@ -122,8 +122,7 @@ function getEventTeaser(event: TechEvent) {
     case 'hackathon':
       return `${event.title} (Hackathon), ` + `hosted at ${event.location}`
     default:
-      event
-      throw new Error('Not sure what to do with that!')
+      throw neverError('Not sure what to do with that!', event)
   }
 }
 
@@ -254,3 +253,16 @@ function isUserEventListCategory(
 /**
  * never in Control Flow Analysis
  */
+
+/**
+ * Preparing for Dynamic Updates
+ */
+
+function neverError(
+  message: string,
+  token: never, // The culprit
+) {
+  return new Error(`${message}. ${token} should not exist`)
+}
+
+
