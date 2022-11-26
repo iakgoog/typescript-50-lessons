@@ -97,4 +97,31 @@ if (isAvailable(1337, aKey)) {
  * Defining Boundaries
  */
 
+/**
+ * Index Types
+ */
+
+type PossibleKeys = 'meetup' | 'conference' | 'hackathon' | 'webinar'
+
+type Groups = {
+  [k in PossibleKeys]: any
+}
+
+type AnyObject = {
+  [k: string]: any
+}
+
+type URLList = {
+  [k: string]: URL
+}
+
+
+function loadFile<Formats extends URLList>(
+  fileFormats: Formats, 
+  format: string
+) {
+
+}
+
+
 
