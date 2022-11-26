@@ -60,5 +60,19 @@ if (isAvailable(videoFormats, format)) {
 declare const subtitles: SubtitleURLs
 
 if (isAvailable(subtitles, language)) {
-  
+
 }
+
+/**
+ * Generics in the Wild
+ */
+
+async function randomNumber() {
+  return Math.random()
+}
+
+let anArray: number[]
+
+let anotherArray: Array<number>
+
+let aMixedArray: Array<number | string | boolean>
