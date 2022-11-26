@@ -265,4 +265,32 @@ function neverError(
   return new Error(`${message}. ${token} should not exist`)
 }
 
+/**
+ * undefined and null in the Type Space
+ */
 
+let age: number
+
+age = age + 1
+
+function getTeaserHTML(event: TechEvent) {
+  return `<h2>${event.title}</h2>
+    <p>
+      ${event.description}
+    </p>
+  `
+}
+
+function getTeaserListElement(event: TechEvent) {
+  const content = getTeaserHTML(event)
+  const element = document.createElement('li')
+  element.classList.add('teaser-card')
+  element.innerHTML = content
+  return element
+}
+
+function appendEventToList(event: TechEvent) {
+  const list = document.querySelector('#event-list')
+  const element = getTeaserListElement(event)
+  list.append(element)
+}
