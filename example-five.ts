@@ -76,3 +76,19 @@ let anArray: number[]
 let anotherArray: Array<number>
 
 let aMixedArray: Array<number | string | boolean>
+
+/**
+ * Generic Constraints
+ */
+
+if (isAvailable({ name: 'Stefan', age: 38 }, key)) {
+
+}
+
+if (isAvailable('A string', 'length')) {
+
+}
+
+if (isAvailable(1337, aKey)) {
+  
+}
