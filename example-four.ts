@@ -224,12 +224,26 @@ type ArrayKeys = keyof []
 
 function filterUserEvent(
   userEventList: UserEvents,
-  category: UserEventCategory,
+  category: string,
   filterKind?: EventKind,
 ) {
-  const filteredList = userEventList[category]
-  if (filterKind) {
-    return filteredList.filter(event => event.kind === filterKind)
+  if (isUserEventListCategory(userEventList, category)) {
+    const filteredList = userEventList[category]
+    if (filterKind) {
+      return filteredList.filter(event => event.kind === filterKind)
+    }
+    return filteredList
   }
-  return filteredList
+  return userEventList
+}
+
+/**
+ * Type Predicates
+ */
+
+function isUserEventListCategory(
+  list: UserEvents,
+  category: string,
+): category is keyof UserEvents { // The type predicate
+  return Object.keys(list).includes(category)
 }
