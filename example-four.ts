@@ -119,7 +119,10 @@ function getEventTeaser(event: TechEvent) {
       return `${event.title} (Meetup), ` + `hosted at ${event.location}`
     case 'webinar':
       return `${event.title} (Webinar), ` + `available online at ${event.url}`
+    case 'hackathon':
+      return `${event.title} (Hackathon), ` + `hosted at ${event.location}`
     default:
+      event
       throw new Error('Not sure what to do with that!')
   }
 }
@@ -247,3 +250,7 @@ function isUserEventListCategory(
 ): category is keyof UserEvents { // The type predicate
   return Object.keys(list).includes(category)
 }
+
+/**
+ * never in Control Flow Analysis
+ */
