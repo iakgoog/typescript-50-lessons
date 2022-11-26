@@ -116,12 +116,70 @@ type URLList = {
 }
 
 
-function loadFile<Formats extends URLList>(
-  fileFormats: Formats, 
-  format: string
+// function loadFile<Formats extends URLList>(
+//   fileFormats: Formats, 
+//   format: string
+// ) {
+
+// }
+
+/**
+ * Working with Keys
+ */
+
+loadFile(videos, 'format1080p')
+
+loadFile(videos, 'format4k')
+// 4K not available
+// TypeScript doesn't squiggle
+
+/**
+ * Related Type Parameters
+ */
+
+function loadVideoFormat(
+  fileFormats: VideoFormatURLs,
+  format: keyof VideoFormatURLs
 ) {
 
 }
 
+type URLObject = {
+  [k: string]: URL
+}
+
+type Loaded<Key> = {
+  format: Key,
+  loaded: boolean
+}
+
+// function loadFile<Formats extends URLObject>(
+//   fileFormats: Formats,
+//   format: keyof Formats
+// ) {
+
+// }
+
+async function loadFile<
+  Formats extends URLObject,
+  Key extends keyof Formats
+>(
+  fileFormats: Formats,
+  format: Key
+): Promise<Loaded<Key>> {
+  const data = await fetch(fileFormats[format].href)
+  return {
+    format,
+    loaded: data.status === 200
+  }
+}
+
+(async() => {
+  const result = await loadFile(videos, 'format1080p')
+
+  if (result.format !== 'format1080p') {
+    throw new Error('Your implementation is wrong')
+  }
+})()
 
 
