@@ -40,7 +40,7 @@ function isSubtitleAvailable(
  * Enter Generics
  */
 
-function isAvailable<Formats>(
+function isAvailable<Formats extends object>(
   obj: Formats,
   key: string | number | symbol
 ): key is keyof Formats {
@@ -90,5 +90,11 @@ if (isAvailable('A string', 'length')) {
 }
 
 if (isAvailable(1337, aKey)) {
-  
+
 }
+
+/**
+ * Defining Boundaries
+ */
+
+
