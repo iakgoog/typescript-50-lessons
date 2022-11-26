@@ -1,5 +1,5 @@
 /**
- * Generics
+ * Genericssad6
  */
 
 type VideoFormatURLs = {
@@ -29,5 +29,16 @@ function isSubtitleAvailable(
   obj: SubtitleURLs,
   key: string,
 ): key is keyof SubtitleURLs {
+  return key in obj
+}
+
+/**
+ * Enter Generics
+ */
+
+function isAvailable<Formats>(
+  obj: Formats,
+  key: string | number | symbol
+): key is keyof Formats {
   return key in obj
 }
