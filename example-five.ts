@@ -19,6 +19,10 @@ function isFormatAvailable(
   return key in obj
 }
 
+if (isFormatAvailable<VideoFormatURLs>(videos, format)) {
+  videos[format]
+}
+
 type SubtitleURLs = {
   english: URL,
   german: URL,
@@ -41,4 +45,20 @@ function isAvailable<Formats>(
   key: string | number | symbol
 ): key is keyof Formats {
   return key in obj
+}
+
+/**
+ * Generic Annotations and Generic Inference
+ */
+
+declare const videoFormats: VideoFormatURLs
+
+if (isAvailable(videoFormats, format)) {
+
+}
+
+declare const subtitles: SubtitleURLs
+
+if (isAvailable(subtitles, language)) {
+  
 }
