@@ -197,4 +197,8 @@ type HD = Pick<VideoFormatURLs, 'format1080p' | 'format720p'>
 //   format720: URL
 // }
 
+/**
+ * Record
+ */
 
+// type URLObject = Record<string, URL>
