@@ -182,4 +182,19 @@ async function loadFile<
   }
 })()
 
+/**
+ * Generic Mapped Types
+ */
+
+/**
+ * Pick
+ */
+
+type HD = Pick<VideoFormatURLs, 'format1080p' | 'format720p'>
+
+// type HD = {
+//   format1080: URL,
+//   format720: URL
+// }
+
 
