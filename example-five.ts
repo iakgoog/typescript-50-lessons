@@ -350,9 +350,9 @@ const defaultUP2: Const<UserPreferences> = {
 defaultUP2.format = 'format720p'
 defaultUP2.subtitles.active = true
 
-function genDefaults(obj: UserPreferences) {
-  return Object.freeze(obj)
-}
+// function genDefaults(obj: UserPreferences) {
+//   return Object.freeze(obj)
+// }
 
 const defaultUP3 = genDefaults({
   format: 'format1080p',
@@ -385,5 +385,26 @@ function genDefaults(obj: UserPreferences): DeepReadonly<UserPreferences> {
 type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>
 }
+
+/**
+ * Binding Generics
+ */
+
+/**
+ * Type Inference
+ */
+
+combinePreferences(
+  defaultUP3,
+  { format: 'format720p', theme: 'dark'}
+)
+
+const userSettings = {
+  format: 'format720p', theme: 'dark'
+} as const
+
+combinePreferences(
+  defaultUP3, userSettings
+)
 
 
