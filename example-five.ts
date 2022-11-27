@@ -466,7 +466,7 @@ const prefs3 = combinePreferences(
 type Nullable<G> = G | undefined
 
 class Container<GElement extends HTMLElement = HTMLVideoElement> {
-  #element: Nullable<GElement>;
+  #element: Null able<GElement>;
   #prefs: UserPreferences;
 
   constructor(prefs: UserPreferences) {
@@ -503,3 +503,33 @@ container.loadVideo(videos)
  */
 
 const vidContainer = new Container<HTMLVideoElement>(userPrefs)
+
+
+/**
+ * Generic Default Parameters and Type Inference
+ */
+
+declare function createVid<
+  GElement extends HTMLElement = HTMLVideoElement
+>(
+  prefs: UserPreferences,
+  formats: VideoFormatURLs,
+  element?: GElement
+)
+
+declare const userPrefs: UserPreferences
+declare const formats: VideoFormatURLs
+
+const a = createVid<HTMLAudioElement>(userPrefs, formats)
+
+const b = createVid(
+  userPrefs,
+  formats,
+  document.createElement('div')
+)
+
+const c = createVid(
+  userPrefs,
+  formats,
+  document.createElement('video')
+)
