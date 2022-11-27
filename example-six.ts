@@ -114,10 +114,10 @@ type AsyncResult<FHead, Par extends FetchParams> = FHead extends [
   Par,
   FetchCb<Par>
 ]
-    ? void
-    : FHead extends [Par]
-      ? Promise<FetchReturn<Par>>
-      : never;
+  ? void
+  : FHead extends [Par]
+    ? Promise<FetchReturn<Par>>
+    : never;
 
 function fetchOrder<Par extends FetchParams, FHead>(
   ...args: FHead
@@ -154,3 +154,20 @@ function fetchOrder<Par extends FetchParams>(
     return res
   }
 }
+
+/**
+ * Distributive
+ */
+
+type FetchParams = number
+  | Customer
+  | Product
+
+type FetchReturn<Param extends FetchParams> =
+  Param extends Customer
+  ? Order[]
+  : Param extends Product
+    ? Order[]
+    : Order
+
+type FetchByCustomer = FetchReturn<Customer>
