@@ -365,4 +365,25 @@ const defaultUP3 = genDefaults({
 
 defaultUP3.format = 'format720p'
 
+/**
+ * Deep Modifications
+ */
+
+const prefs = combinePreferences(
+  defaultUP3,
+  { subtitles: { language: 'german' }}
+)
+
+type DeepReadonly<Obj> = {
+  readonly [Key in keyof Obj]: DeepReadonly<Obj[Key]>
+}
+
+function genDefaults(obj: UserPreferences): DeepReadonly<UserPreferences> {
+  return Object.freeze(obj)
+}
+
+type DeepPartial<T> = {
+  [P in keyof T]?: DeepPartial<T[P]>
+}
+
 
