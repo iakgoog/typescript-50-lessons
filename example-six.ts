@@ -73,4 +73,18 @@ type FetchReturn<Param extends FetchParams> =
   Param extends Customer ? Order[] :
   Param extends Product ? Order[] : Order
 
+/**
+ * Combining Function Overloads and Conditional Types
+ */
+
+type Callback<Res> = (result: Res) => void
+
+function fetchOrder<Par extends FetchParams>(
+  inp: Par
+): Promise<FetchReturn<Par>>
+
+function fetchOrder<Par extends FetchParams>(
+  inp: Par, fun: Callback<FetchReturn<Par>>
+): void
+
 
