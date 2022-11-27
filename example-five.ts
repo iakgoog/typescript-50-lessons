@@ -266,3 +266,66 @@ type Split<Obj> = {
 }[keyof Obj]
 
 type AvailableFormats = Split<VideoFormatURLs>
+
+/**
+ * Mapped Type Modifiers
+ */
+
+type UserPreferences = {
+  format: keyof VideoFormatURLs,
+  subtitles: {
+    active: boolean,
+    language: keyof SubtitleURLs
+  },
+  theme: 'dark' | 'light'
+}
+
+/**
+ * Partials
+ */
+
+const defaultUP: UserPreferences = {
+  format: 'format1080p',
+  subtitles: {
+    active: false,
+    language: 'english'
+  },
+  theme: 'light'
+}
+
+const UserPreferences = {
+  format: 'format720p'
+}
+
+// function combinePreferences(defaultP, userP) {
+//   return { ...defaultP, ...userP }
+// }
+
+function combinePreferences(
+  defaultP: UserPreferences,
+  userP: Optional<UserPreferences>
+) {
+  return { ...defaultP, ...userP }
+}
+
+type OptionalUserPreferences = {
+  format?: keyof VideoFormatURLs,
+  subtitiles?: {
+    active?: boolean,
+    language?: keyof SubtitleURLs
+  },
+  theme?: 'dark' | 'light'
+}
+
+type Optional<Obj> = {
+  [Key in keyof Obj]?: Obj[Key]
+}
+
+const prefs = combinePreferences(
+  defaultUP,
+  { format: 'format720p' }
+)
+
+// type Required<Obj> = {
+//   [Key in Obj]-?: Obj[Key]
+// }
