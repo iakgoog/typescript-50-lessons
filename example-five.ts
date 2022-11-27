@@ -399,12 +399,20 @@ combinePreferences(
   { format: 'format720p', theme: 'dark'}
 )
 
-const userSettings = {
+// const userSettings = {
+//   format: 'format720p', theme: 'dark'
+// } as const
+
+const userSettings: Partial<UserPreferences> = {
   format: 'format720p', theme: 'dark'
-} as const
+}
 
 combinePreferences(
   defaultUP3, userSettings
 )
+
+/**
+ * Type Annotations
+ */
 
 
