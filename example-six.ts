@@ -171,3 +171,46 @@ type FetchReturn<Param extends FetchParams> =
     : Order
 
 type FetchByCustomer = FetchReturn<Customer>
+
+/**
+ * Distributive over Unions
+ */
+
+type FetchByProductOrId = FetchReturn<Product | number>
+// type FetchByProductOrId = Order[] | Order
+
+// type FetchByProductOrId = (
+//   Product extends Customer
+//     ? Order[]
+//     : Product extends Product
+//       ? Order[]
+//       : Order
+// ) | (
+//   number extends Customer
+//     ? Order[]
+//     : number extends Product
+//       ? Order[]
+//       : Order
+// )
+
+type FetchByProductOrId2 = FetchReturn<Product | Customer | number>
+
+// type FetchByProductOrId2 = (
+//   Product extends Customer
+//     ? Order[]
+//     : Product extends Product
+//       ? Order[]
+//       : Order
+// ) | (
+//   Customer extends Customer
+//     ? Order[]
+//     : Customer extends Product
+//       ? Order[]
+//       : Order
+// ) | (
+//   number extends Customer
+//     ? Order[]
+//     : number extends Product
+//       ? Order[]
+//       : Order
+// )
