@@ -301,12 +301,48 @@ const UserPreferences = {
 //   return { ...defaultP, ...userP }
 // }
 
-function combinePreferences(
-  defaultP: UserPreferences,
-  userP: Optional<UserPreferences>
+// function combinePreferences<UserPref extends Partial<UserPreferences>>(
+//   defaultP: UserPreferences,
+//   userP: UserPref
+// ) {
+//   return { ...defaultP, ...userP }
+// }
+
+function combinePreferences<
+  Defaults extends UserPreferences,
+  UserPref extends Partial<UserPreferences>
+>(
+  defaultP: Defaults,
+  userP: UserPref
 ) {
   return { ...defaultP, ...userP }
 }
+
+const defaultUP4 = {
+  format: 'format1080p',
+  subtitles: {
+    active: false,
+    language: 'english'
+  },
+  theme: 'light'
+} as const
+
+const prefs4 = combinePreferences(
+  defaultUP4,
+  { format: 'format720p', theme: 'dark' }
+)
+
+// const prefs41: {
+//   readonly format: 'format1080p';
+//   readonly subtitles: {
+//     readonly active: false;
+//     readonly language: 'english';
+//   };
+//   readonly theme: 'light';
+// } & {
+//   format: 'format720p';
+//   theme: 'dark';
+// }
 
 type OptionalUserPreferences = {
   format?: keyof VideoFormatURLs,
@@ -394,7 +430,7 @@ type DeepPartial<T> = {
  * Type Inference
  */
 
-combinePreferences(
+const pref2 = combinePreferences(
   defaultUP3,
   { format: 'format720p', theme: 'dark'}
 )
@@ -407,7 +443,7 @@ const userSettings: Partial<UserPreferences> = {
   format: 'format720p', theme: 'dark'
 }
 
-combinePreferences(
+const prefs3 = combinePreferences(
   defaultUP3, userSettings
 )
 
@@ -415,4 +451,7 @@ combinePreferences(
  * Type Annotations
  */
 
+/**
+ * Generic Type Binding
+ */
 
