@@ -87,4 +87,35 @@ function fetchOrder<Par extends FetchParams>(
   inp: Par, fun: Callback<FetchReturn<Par>>
 ): void
 
+/**
+ * Tuple Types for Function Heads
+ */
 
+function doSomething(...rest) {
+  return rest[0] + rest[1]
+}
+
+doSomething('Java', 'Script')
+
+function fetchOrder<Par extends FetchParams>(
+  ...args: [Par, Callback<FetchReturn<Par>>]
+): void
+
+function fetchOrder<Par extends FetchParams>(
+  ...args: [Par]
+): Promise<FetchReturn<Par>>
+
+type FetchCb<T extends FetchParams> = Callback<FetchReturn<T>>
+
+type AsyncResult<
+  FHead, Par extends FetchParams
+> = FHead extends [Par, FetchCb<Par>]
+    ? void
+    : FHead extends [Par]
+      ? Promise<FetchReturn<Par>>
+      : never;
+
+function fetchOrder<
+  Par extends FetchParams,
+  FHead
+>(...args: FHead): AsyncResult<FileSystemHandle, Par>
