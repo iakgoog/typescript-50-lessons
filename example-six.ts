@@ -43,15 +43,34 @@ function fetchOrder(orderId: number): Order
 function fetchOrder(param: Customer | Product): Order[]
 function fetchOrder(param: Customer | number): Order[] | Order
 function fetchOrder(param: Product | number): Order[] | Order
-function fetchOrder(param: Customer | Product | number): Order[] | Order {
-  
+function fetchOrder(param: Customer | Product | number): Order[] | Order
+function fetchOrder<Param extends FetchParams>(param: Param): FetchReturn<Param> {
 }
 
 fetchOrder(customer)
+fetchOrder(product)
 fetchOrder(2)
 
 declare const ambigous: Customer | number
 
 fetchOrder(ambigous) // It's any
+
+declare x: any
+
+fetchOrder(x)
+
+/**
+ * Enter Conditional Types
+ */
+
+// type Conditional<T> = T extends U ? A : B
+
+type FetchParams = number
+  | Customer
+  | Product;
+
+type FetchReturn<Param extends FetchParams> =
+  Param extends Customer ? Order[] :
+  Param extends Product ? Order[] : Order
 
 
