@@ -329,3 +329,40 @@ const prefs = combinePreferences(
 // type Required<Obj> = {
 //   [Key in Obj]-?: Obj[Key]
 // }
+
+/**
+ * Readonly
+ */
+
+type Const<Obj> = {
+  readonly [Key in keyof Obj]: Obj[Key]
+}
+
+const defaultUP2: Const<UserPreferences> = {
+  format: 'format1080p',
+  subtitles: {
+    active: false,
+    language: 'english'
+  },
+  theme: 'light'
+}
+
+defaultUP2.format = 'format720p'
+defaultUP2.subtitles.active = true
+
+function genDefaults(obj: UserPreferences) {
+  return Object.freeze(obj)
+}
+
+const defaultUP3 = genDefaults({
+  format: 'format1080p',
+  subtitles: {
+    active: false,
+    language: 'english'
+  },
+  theme: 'light'
+})
+
+defaultUP3.format = 'format720p'
+
+
