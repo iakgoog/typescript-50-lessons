@@ -465,7 +465,7 @@ const prefs3 = combinePreferences(
 
 type Nullable<G> = G | undefined
 
-class Container<GElement extends HTMLElement> {
+class Container<GElement extends HTMLElement = HTMLVideoElement> {
   #element: Nullable<GElement>;
   #prefs: UserPreferences;
 
@@ -498,3 +498,8 @@ container.element = document.createElement('video')
 container.loadVideo(videos)
 
 
+/**
+ * Adding Defaults
+ */
+
+const vidContainer = new Container<HTMLVideoElement>(userPrefs)
