@@ -214,3 +214,45 @@ type FetchByProductOrId2 = FetchReturn<Product | Customer | number>
 //       ? Order[]
 //       : Order
 // )
+
+/**
+ * Naked Types
+ */
+
+type FetchReturn2<Param extends FetchParams> = 
+  [Param] extends [Customer]
+    ? Order[]
+    : [Param] extends [Product]
+      ? Order[]
+      : Order
+
+type FetchByCustomer2 = FetchReturn2<Customer>
+
+// type FetchByCustomer2 = 
+//   [Customer] extends [Customer]
+//     ? Order[]
+//     : [Customer] extends [Product]
+//       ? Order[]
+//       : Order
+
+type FetchByCustomerOrId = FetchReturn2<Customer | number>
+// type FetchByCustomerOrId = Order
+
+// type FetchByCustomerOrId = 
+//   // This is false!
+//   [Customer | number] extends [Customer]
+//     ? Order[]
+//     // This is obviously also false
+//     : [Customer | number] extends [Product]
+//       ? Order[]
+//       // So we resolve to this
+//       : Order
+
+type FetchReturn3<Param extends FetchParams> = 
+  [Param] extends [Customer]
+    ? Order[]
+    : [Param] extends [Product]
+      ? Order[]
+      : [Param] extends [number]
+        ? Order
+        : never
