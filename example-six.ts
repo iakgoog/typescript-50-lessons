@@ -291,4 +291,20 @@ type LP = Medium & {
 type AllMedia = CD | LP
 type MediaKinds = AllMedia['kind']
 
+/**
+ * Select Branches of Unions
+ */
+
+// declare function createMedium(kind, info): AllMedia
+
+// declare function createMedium(kind: MediaKinds, info): AllMedia
+
+declare function createMedium<Kin extends MediaKinds>(
+  kind: Kin, info
+): SelectBranch<AllMedia, Kin>
+
+type SelectBranch<Branch, Kin> = Branch extends { kind: Kin } ? Branch : never;
+
+type SelectCD = SelectBranch<AllMedia, 'cd'>
+
 
