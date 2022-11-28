@@ -256,3 +256,39 @@ type FetchReturn3<Param extends FetchParams> =
       : [Param] extends [number]
         ? Order
         : never
+
+/**
+ * Filtering with never
+ */
+
+/**
+ * The Model
+ */
+
+type Medium = {
+  id: number,
+  title: string,
+  artist: string,
+}
+
+type TrackInfo = {
+  duration: number,
+  tracks: number
+}
+
+type CD = Medium & TrackInfo & {
+  kind: 'cd'
+}
+
+type LP = Medium & {
+  sides: {
+    a: TrackInfo,
+    b: TrackInfo
+  },
+  kind: 'lp'
+}
+
+type AllMedia = CD | LP
+type MediaKinds = AllMedia['kind']
+
+
