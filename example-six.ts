@@ -307,4 +307,12 @@ type SelectBranch<Branch, Kin> = Branch extends { kind: Kin } ? Branch : never;
 
 type SelectCD = SelectBranch<AllMedia, 'cd'>
 
+/**
+ * Extract
+ */
+
+type MyExtract<A, B> = A extends B ? A : never
+
+type SelectLP = MyExtract<AllMedia, { kind: 'lp' }
+
 
