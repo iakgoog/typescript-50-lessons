@@ -313,6 +313,75 @@ type SelectCD = SelectBranch<AllMedia, 'cd'>
 
 type MyExtract<A, B> = A extends B ? A : never
 
-type SelectLP = MyExtract<AllMedia, { kind: 'lp' }
+type SelectLP = MyExtract<AllMedia, { kind: 'lp' }>
 
+/**
+ * Composing Helper Types
+ */
+
+// declare function createMedium2<Kin extends MediaKinds>(kind: Kin, info): SelectBranch<AllMedia, Kin>
+
+/**
+ * Exclude
+ */
+
+type CDInfo = {
+  title: string,
+  description: string,
+  tracks: number,
+  duration: number
+}
+
+type LPInfo = {
+  title: string,
+  description: string,
+  sides: {
+    a: {
+      tracks: number,
+      duraton: number
+    },
+    b: {
+      tracks: number,
+      duration: number
+    }
+  }
+}
+
+type Removeable = 'kind' | 'id'
+
+type Remove<A, B> = A extends B ? never : A
+
+type CDKeys = keyof CD
+
+// type CDKeys = 'id' | 'description' | 'title' | 'kind' | 'tracks' | 'duration'
+
+type CDInfoKeys = Remove<CDKeys, Removeable>
+// Equal to
+type CDInfoKeys2 = Remove<'id' | 'description' | 'title' | 'kind' | 'tracks' | 'duration' , 'id' | 'kind'>
+// Equal to
+type CDInfoKeys3 = 
+  Remove<'id', 'id' | 'kind'> |
+  Remove<'description', 'id' | 'kind'> |
+  Remove<'title', 'id' | 'kind'> |
+  Remove<'kind', 'id' | 'kind'> |
+  Remove<'tracks', 'id' | 'kind'> |
+  Remove<'duration', 'id' | 'kind'>
+// Equal to
+type CDInfoKeys4 =
+  ('id' extends 'id' | 'kind'
+    ? never : 'id') |
+  ('description' extends 'id' | 'kind'
+    ? never : 'description') |
+  ('title' extends 'id' | 'kind'
+    ? never : 'title') |
+  ('kind' extends 'id' | 'kind'
+    ? never : 'kind') |
+  ('tracks' extends 'id' | 'kind'
+    ? never : 'tracks') |
+  ('duration' extends 'id' | 'kind'
+    ? never : 'duration')
+// Equal to
+type CDInfoKeys5 = never | 'description' | 'title' | never | 'tracks' | 'duration'
+// Equal to
+type CDInfoKeys6 = 'description' | 'title' | 'tracks' | 'duration'
 
