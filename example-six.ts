@@ -397,4 +397,57 @@ declare function createMedium2<
   info: GetInfo<SelectBranch<AllMedia, Kin>>
 ): SelectBranch<AllMedia, Kin>
 
+/**
+ * The infer Keyword
+ */
 
+let userId = 0
+
+function createUser(name, roles) {
+  return {
+    userId: userId++,
+    name,
+    roles,
+    createAt: new Date()
+  }
+}
+
+function createUser2(
+  name: string,
+  role: 'admin' | 'maintenance' | 'shipping',
+  isActive: boolean
+) {
+  return {
+    userId: userId++,
+    name,
+    role,
+    isActive,
+    createdAt: new Date()
+  }
+}
+
+/**
+ * Infer the Return Type
+ */
+
+const user = createUser2('Stefan', 'shipping', true)
+
+/*
+type User = {
+  userId: number,
+  name: string,
+  role: 'admin' | 'maintenance' | 'shipping',
+  isActive: boolean,
+  createdAt: Date
+}
+*/
+
+type User = typeof user
+
+type GetReturn<Fun> = Fun extends (...args: any[]) => any ? Fun : never
+
+type Fun = GetReturn<typeof createUser2>
+
+type GetReturn2<Fun> = Fun extends (...args: any[]) => infer R ? R : never
+
+type User2 = GetReturn2<typeof createUser2>
