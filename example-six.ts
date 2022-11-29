@@ -451,3 +451,23 @@ type Fun = GetReturn<typeof createUser2>
 type GetReturn2<Fun> = Fun extends (...args: any[]) => infer R ? R : never
 
 type User2 = GetReturn2<typeof createUser2>
+
+/**
+ * Helper Types
+ */
+
+type Unpack<T> = T extends Promise<infer Res> ? Res : never
+type UnpackConcrete = Unpack<Promise<number>>
+
+type Flatten<T> = T extends Array<infer Vals> ? Vals : never
+type FlattenConcrete = Flatten<Customer[]>
+
+type Parameters2<T> = T extends (...args: infer Param) => any ? Param : never
+type ParametersConcrete = Parameters2<typeof createUser2>
+
+// • InstanceType. Gets the type of the created instance of the class’s constructor function.
+// • ThisParameterType. If you use callback functions that bind this, you can get the bound type in return.
+// • OmitThisParameterType. Uses infer to return a function signature without the this type. This is handy if
+// your app doesn’t care about the bound this type and needs to be more flexible in passing functions.
+
+
