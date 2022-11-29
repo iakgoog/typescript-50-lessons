@@ -351,7 +351,7 @@ type Removeable = 'kind' | 'id'
 
 type Remove<A, B> = A extends B ? never : A
 
-type CDKeys = keyof CD
+type CDKeys = keyof CDInfo
 
 // type CDKeys = 'id' | 'description' | 'title' | 'kind' | 'tracks' | 'duration'
 
@@ -368,20 +368,33 @@ type CDInfoKeys3 =
   Remove<'duration', 'id' | 'kind'>
 // Equal to
 type CDInfoKeys4 =
-  ('id' extends 'id' | 'kind'
-    ? never : 'id') |
-  ('description' extends 'id' | 'kind'
-    ? never : 'description') |
-  ('title' extends 'id' | 'kind'
-    ? never : 'title') |
-  ('kind' extends 'id' | 'kind'
-    ? never : 'kind') |
-  ('tracks' extends 'id' | 'kind'
-    ? never : 'tracks') |
-  ('duration' extends 'id' | 'kind'
-    ? never : 'duration')
+  ('id' extends 'id' | 'kind' ? never : 'id') |
+  ('description' extends 'id' | 'kind' ? never : 'description') |
+  ('title' extends 'id' | 'kind' ? never : 'title') |
+  ('kind' extends 'id' | 'kind' ? never : 'kind') |
+  ('tracks' extends 'id' | 'kind' ? never : 'tracks') |
+  ('duration' extends 'id' | 'kind' ? never : 'duration')
 // Equal to
 type CDInfoKeys5 = never | 'description' | 'title' | never | 'tracks' | 'duration'
 // Equal to
 type CDInfoKeys6 = 'description' | 'title' | 'tracks' | 'duration'
+
+/**
+ * Omit
+ */
+
+type CDInfo2 = Pick<CD, Exclude<keyof CD, 'kind' | 'id'>>
+
+type CDInfo3 = Omit<CD, 'kind' | 'id'>
+
+type RemoveableKeys = 'kind' | 'id'
+type GetInfo<Med> = Omit<Med, RemoveableKeys>
+
+declare function createMedium2<
+  Kin extends MediaKinds
+>(
+  kind: Kin,
+  info: GetInfo<SelectBranch<AllMedia, Kin>>
+): SelectBranch<AllMedia, Kin>
+
 
