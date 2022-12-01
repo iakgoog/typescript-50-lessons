@@ -470,4 +470,28 @@ type ParametersConcrete = Parameters2<typeof createUser2>
 // • OmitThisParameterType. Uses infer to return a function signature without the this type. This is handy if
 // your app doesn’t care about the bound this type and needs to be more flexible in passing functions.
 
+/**
+ * Working with null
+ */
 
+declare function fetchOrderList(input: Customer | Product): Promise<Order[]>
+
+/**
+ * NonNullable
+ */
+
+declare function listOrders(Order[] | null): void
+declare function listOrders2(Order[]): void
+
+declare function isAvailable<Obj>(obj: Obj): obj is NonNullable<Obj>
+
+type MyNonNullable<T> = T extends null | undefined ? never : T
+
+function isAvailable<Obj>(obj: Obj): obj is NonNullable<Obj> {
+  return typeof obj !== 'undefined' && obj !== null
+}
+
+const orders = await fetchOrderList(customer)
+if (isAvailable(orders)) {
+  listOrders(orders)
+}
