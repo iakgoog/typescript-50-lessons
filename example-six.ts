@@ -495,3 +495,36 @@ const orders = await fetchOrderList(customer)
 if (isAvailable(orders)) {
   listOrders(orders)
 }
+
+/**
+ * Low-Leverl Utilities
+ */
+
+type FetchDBKind = 'orders' | 'products' | 'customers'
+
+type FetchDBReturn<T> = 
+  T extends 'orders' ? Order[] :
+  T extends 'products' ? Product[] :
+  T extends 'customer' ? Customer[] : never
+
+declare function fetchFromDatabase<
+  Kin extends FetchDBKind
+>(
+  kind: Kin
+): Promise<FetchDBReturn<Kin>| null>
+
+function process<T extends Promise<any>>(
+  promise: T,
+  cb: (res: Unpack<NonNullable<T>>) => void
+): void {
+  promise.then(res => {
+    if (isAvailable(res)) {
+      cb(res)
+    }
+  })
+}
+
+process(
+  fetchFromDatabase('orders'),
+  listOrders
+)
