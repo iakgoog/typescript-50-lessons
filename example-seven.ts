@@ -117,3 +117,30 @@ type Item = {
   widget: Widget;
   children?: Item[]
 }
+
+/**
+ * JSONified Values
+ */
+
+type JSONified<T> = JSONifiedValue<T extends { toJSON(): infer U } ? U : T>;
+
+type JSONifiedValue<T> = 
+  T extends string | number | boolean | null ? T :
+  T extends Function ? never :
+  T extends object ? JSONifiedObject<T> :
+  T extends Array<infer U> ? JSONifiedArray<U> :
+  never;
+
+type JSONifiedObject<T> = {
+  [P in keyof T]: JSONified<T[P]>
+}
+
+type UndefinedAsNull<T> = T extends undefined ? null : T;
+
+type JSONifiedArray<T> = Array<UndefinedAsNull<JSONified<T>>>
+
+const itemSerializer = new Serializer<Item>()
+
+const serialization = itemSerializer.serialize(anItem)
+
+const obj = itemSerializer.deserialize(serialization)
