@@ -81,3 +81,39 @@ function promisify<
     })
   }
 }
+
+/**
+ * JSONify
+ */
+
+class Serializer<T> {
+
+  serialize(inp: T): string {
+    return JSON.stringify(inp)
+  }
+
+  deserialize(inp: string): JSONified<T> {
+    return JSON.parse(inp)
+  }
+
+}
+
+type Widget = {
+  toJSON(): {
+    kind: 'Widget',
+    date: Date
+  }
+}
+
+type Item = {
+  text: string;
+  count: number;
+  choice: 'yes' | 'no' | null;
+  func: () => void;
+  nested: {
+    isSaved: boolean;
+    data: [1, undefined, 2];
+  }
+  widget: Widget;
+  children?: Item[]
+}
