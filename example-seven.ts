@@ -232,4 +232,17 @@ type TypeFromConstructor<T> =
 }
 */
 
+/**
+ * The Service Object
+ */
+
+type ServiceObject<T extends ServiceDefinition> = {
+  [P in keyof T]: ServiceMethod<T[P]>
+}
+
+type ServiceMethod<T extends MethodDefinition> = 
+  {} extends T
+    ? () => boolean
+    : (payload: RequestPayload<T>) => boolean;
+
 
