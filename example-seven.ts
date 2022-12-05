@@ -183,4 +183,53 @@ type RequestHandler<
   T extends ServiceDefinition
 > = (req: RequestObject<T>) => boolean;
 
+/**
+ * The Request Object
+ */
+
+type RequestObject<T extends ServiceDefinition> = {
+  [P in keyof T]: {
+    message: P;
+    payload: RequestPayload<T[P]>;
+  }
+}[keyof T];
+
+type RequestPayload<T extends MethodDefinition> = 
+  {} extends T
+    ? undefined
+    : { [P in keyof T]: TypeFromConstructor<T[P]> };
+
+type TypeFromConstructor<T> = 
+  T extends StringConstructor
+    ? string
+    : T extends NumberConstructor
+      ? number
+      : any;
+
+/*
+{
+  req: {
+    message: "open",
+    payload: {
+      filename: string;
+    };
+  } | {
+    message: "insert",
+    payload: {
+      pos: number;
+      text: string;
+    }
+  } | {
+    message: "delete",
+    payload: {
+      pos: number;
+      len: number;
+    }
+  } | {
+    message: "close",
+    payload: undefined;
+  }
+}
+*/
+
 
