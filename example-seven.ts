@@ -160,4 +160,27 @@ const serviceDefinition = {
   close: {},
 }
 
+/**
+ * Typing Service Definitions
+ */
+
+declare function createService<
+  S extends ServiceDefinition
+>(
+  serviceDef: S,
+  handler: RequestHandler<S>,
+): ServiceObject<S>
+
+type ServiceDefinition = {
+  [x: string]: MethodDefinition;
+};
+
+type MethodDefinition = {
+  [x: string]: StringConstructor | NumberConstructor;
+};
+
+type RequestHandler<
+  T extends ServiceDefinition
+> = (req: RequestObject<T>) => boolean;
+
 
