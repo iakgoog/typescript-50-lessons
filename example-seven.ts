@@ -245,4 +245,41 @@ type ServiceMethod<T extends MethodDefinition> =
     ? () => boolean
     : (payload: RequestPayload<T>) => boolean;
 
+/**
+ * Implementing createService
+ */
 
+function createService<S extends ServiceDefinition>(
+  serviceDef: S,
+  handler: RequestHandler<S>,
+): ServiceObject<S> {
+  const service: Record<string, Function> = {};
+  for (const name in serviceDef) {
+    service[name] = (payload: any) => handler({
+      message: name,
+      payload
+    });
+  }
+  return service as ServiceObject<S>;
+}
+
+const service = createService(
+  serviceDefinition,
+  req => {
+    switch (req.message) {
+      case 'open':
+        // Do something
+        break;
+      case 'insert':
+        // Do something
+        break;
+      default:
+        break;
+    }
+    return true;
+  }
+);
+
+service.open({ filename: 'text.txt' });
+
+service.close();
