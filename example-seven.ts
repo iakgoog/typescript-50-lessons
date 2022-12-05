@@ -144,3 +144,20 @@ const itemSerializer = new Serializer<Item>()
 const serialization = itemSerializer.serialize(anItem)
 
 const obj = itemSerializer.deserialize(serialization)
+
+/**
+ * Service Definitions
+ */
+
+/**
+ * Dynamic Definitions
+ */
+
+const serviceDefinition = {
+  open: { filename: String },
+  insert: { pos: Number, text: String },
+  delete: { pos: Number, len: Number },
+  close: {},
+}
+
+
