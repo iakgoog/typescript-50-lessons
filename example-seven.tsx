@@ -283,3 +283,75 @@ const service = createService(
 service.open({ filename: 'text.txt' });
 
 service.close();
+
+/**
+ * DOM JSX Engine, Part 1
+ */
+
+function DOMcreateElement(
+  element, properties, ...children
+) {
+  if (typeof element === 'function') {
+    return element({
+      ...nonNull(properties, {}),
+      children
+    })
+  }
+
+  return DOMparseNode(
+    element,
+    properties,
+    children,
+  );
+}
+
+function nonNull(val, fallback) {
+  return Boolean(val) ? val : fallback
+}
+
+function DOMparseNode(element, properties, children) {
+  const el = Object.assign(
+    document.createElement(element),
+    properties
+  );
+  DOMparseChildren(children).forEach(child => {
+    el.appendChild(child);
+  });
+  return el;
+}
+
+function DOMparseChildren(children) {
+  return children.map(child => {
+    if (typeof child === 'string') {
+      return document.createTextNode(child);
+    }
+    return child;
+  })
+}
+
+const Button = ({ msg }) => {
+  return (
+    <button onclick={() => alert(msg)}>
+      <strong>Click me</strong>
+    </button>
+  )
+}
+
+const el = (
+  <div>
+    <h1 className="what">Hello World</h1>
+    <p>
+      Lorem ipsum dolor sit, amet consectetur
+      adipisicing elit. Quae sed consectetur
+      placeat veritatis
+      illo vitae quos aut unde doloribus, minima
+      eveniet et
+      eius voluptatibus minus aperiam
+      sequi asperiores, odio ad?
+    </p>
+    <Button msg='Yay' />
+    <Button msg='Nay' />
+  </div>
+)
+
+document.body.appendChild(el);
