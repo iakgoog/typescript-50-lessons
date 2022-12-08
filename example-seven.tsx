@@ -287,10 +287,15 @@ service.close();
 /**
  * DOM JSX Engine, Part 1
  */
-
+function DOMcreateElement<T extends string>(
+  element: T, properties: Props<T>, ...children: PossibleChildren[]
+): HTMLElement
+function DOMcreateElement<F extends Fun2>(
+  element: F, properties: Props<F>, ...children: PossibleChildren[]
+): HTMLElement
 function DOMcreateElement(
-  element, properties, ...children
-) {
+  element: any, properties: any, ...children: PossibleChildren[]
+): HTMLElement {
   if (typeof element === 'function') {
     return element({
       ...nonNull(properties, {}),
@@ -305,11 +310,28 @@ function DOMcreateElement(
   );
 }
 
-function nonNull(val, fallback) {
-  return Boolean(val) ? val : fallback
+// function nonNull(val, fallback) {
+//   return Boolean(val) ? val : fallback
+// }
+function nonNull<T, U>(val: T, fallback: U) {
+  return Boolean(val) ? val : fallback;
 }
 
-function DOMparseNode(element, properties, children) {
+type PossibleChildren = HTMLElement | Text | string
+
+type Fun2 = (...args: any[]) => any;
+
+type AllElementsKeys = keyof HTMLElementTagNameMap
+
+type CreatedElement<T> = T extends AllElementsKeys ? HTMLElementTagNameMap[T] : HTMLElement
+
+type Props<T> = T extends Fun2
+  ? Parameters<T>[0]
+  : T extends string 
+    ? Partial<CreatedElement<T>>
+    : never;
+
+function DOMparseNode<T extends string>(element: T, properties: Props<T>, children: PossibleChildren[]) {
   const el = Object.assign(
     document.createElement(element),
     properties
@@ -320,7 +342,7 @@ function DOMparseNode(element, properties, children) {
   return el;
 }
 
-function DOMparseChildren(children) {
+function DOMparseChildren(children: PossibleChildren[]) {
   return children.map(child => {
     if (typeof child === 'string') {
       return document.createTextNode(child);
@@ -355,3 +377,14 @@ const el = (
 )
 
 document.body.appendChild(el);
+
+/**
+ * DOM JSX Engine, Part 2
+ */
+
+/**
+ * Typing the Factory
+ */
+
+
+
