@@ -400,3 +400,36 @@ declare namespace JSX {
   interface Element extends HTMLElement {}
 }
 
+/**
+ * Extending Object, Part 1
+ */
+
+function print(msg: any) {
+  if (typeof msg === 'string') {
+    console.log(msg.toUpperCase())
+  } else if (typeof msg === 'number') {
+    console.log(msg.toFixed(2))
+  }
+}
+
+/**
+ * Checking Object Properties
+ */
+
+if (typeof obj === 'object' && 'prop' in obj) {
+  console.assert(typeof obj.prop !== 'undefined')
+}
+
+if (typeof obj === 'object' && obj.hasOwnProperty('prop')) {
+  console.assert(typeof obj.prop !== 'undefined')
+}
+
+function hasOwnProperty<X extends {}, Y extends PropertyKey>(
+  obj: X, prop: Y
+): obj is X & Record<Y, unknown> {
+  return obj.hasOwnProperty(prop)
+}
+
+if (typeof person === 'object' && hasOwnProperty(person, 'name') && typeof person.name === 'string') {
+  console.assert(typeof person.name !== 'undefined')
+}
