@@ -386,5 +386,17 @@ document.body.appendChild(el);
  * Typing the Factory
  */
 
+/**
+ * Typing JSX
+ */
 
+declare namespace JSX {
+  type OurIntricsicElements = {
+    [P in keyof HTMLElementTagNameMap]: Partial<HTMLElementTagNameMap[P]>
+  }
+
+  interface IntricsicElements extends OurIntricsicElements {}
+
+  interface Element extends HTMLElement {}
+}
 
