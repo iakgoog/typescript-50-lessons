@@ -433,3 +433,11 @@ function hasOwnProperty<X extends {}, Y extends PropertyKey>(
 if (typeof person === 'object' && hasOwnProperty(person, 'name') && typeof person.name === 'string') {
   console.assert(typeof person.name !== 'undefined')
 }
+
+/**
+ * Extending lib.d.ts
+ */
+
+interface Object {
+  hasOwnProperty<X extends {}, Y extends PropertyKey>(this: X, prop: Y): this is X & Record<Y, unknown>
+}
