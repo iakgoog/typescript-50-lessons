@@ -441,3 +441,48 @@ if (typeof person === 'object' && hasOwnProperty(person, 'name') && typeof perso
 interface Object {
   hasOwnProperty<X extends {}, Y extends PropertyKey>(this: X, prop: Y): this is X & Record<Y, unknown>
 }
+
+/**
+ * Extending the Object Constructor
+ */
+
+const obj2 = {
+  name: 'Stefan',
+  age: 38
+}
+
+Object.keys(obj).map(key => {
+  console.log(obj[key])
+})
+
+// Static parts --> constructor interface
+function Person(name, age) {
+  this.name = name
+  this.age = age
+}
+
+Person.create = function(name, age) {
+  return new Person(name, age)
+}
+
+// Dynamic parts --> instance interface
+Person.prototype.toString = function() {
+  return `My name is ${this.name} and I'm ${this.age} years old`
+}
+
+// A utility type
+type ReturnKeys<O> = 
+  O extends number
+  ? []
+  : O extends Array<any> | string
+    ? string[] 
+    : O extends object
+      ? Array<keyof O>
+      : never
+
+// Extending the interface
+interface ObjectConstructor {
+  keys<O>(obj: O): ReturnKeys<O>
+}
+
+
