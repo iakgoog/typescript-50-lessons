@@ -485,4 +485,44 @@ interface ObjectConstructor {
   keys<O>(obj: O): ReturnKeys<O>
 }
 
+/**
+ * Extending Object, Part 2
+ */
 
+const storage2 = {
+  currentValue: 0
+}
+
+Object.defineProperty(storage2, 'maxValue', {
+  value: 9001,
+  writable: false
+})
+
+console.log(storage2.maxValue)
+
+storage2.maxValue = 2
+
+console.log(storage2.maxValue)
+
+/**
+ * Assertion Signatures
+ */
+
+// function assertIsNum(val: any) {
+//   if (typeof val != 'number') {
+//     throw new AssertionError('Not a number!');
+//   }
+// }
+
+function multiply(x, y) {
+  assertIsNum(x);
+  assertIsNum(y);
+
+  return x * y;
+}
+
+function assertIsNum(val: any): asserts val is number {
+  if (typeof val != 'number') {
+    throw new AssertionError('Not a number!');
+  }
+}
