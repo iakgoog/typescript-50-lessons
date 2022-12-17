@@ -578,5 +578,44 @@ type InferValue<Prop extends PropertyKey, Desc> =
         ? Record<Prop, T>
         : never;
 
+/**
+ * Moving It to the Object Constructor
+ */
 
+interface ObjectConstructor {
+  defineProperty<
+    Obj extends object,
+    Key extends PropertyKey,
+    PDesc extends PropertyDescriptor
+  >(obj: Obj, prop: Key, val: PDesc): asserts obj is Obj & DefineProperty<Key, PDesc>;
+}
 
+const storage3 = {
+  currentValue: 0
+}
+
+Object.defineProperty(storage3, 'maxValue', {
+  writable: false,
+  value: 9001
+})
+
+storage3.maxValue
+storage3.maxValue = 2
+
+const storageName = 'My Storage'
+defineProperty(storage3, 'name', {
+  get() {
+    return storageName
+  }
+})
+
+storage3.name
+
+Object.defineProperty(storage3, 'broken', {
+  get() {
+    return storageName
+  },
+  value: 4000
+})
+
+storage3
